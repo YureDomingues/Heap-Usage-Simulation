@@ -2,12 +2,16 @@
 #include <stdlib.h>
 #include "headers/lista.h"
 
-lista *lixo = NULL;
+lista *heap = NULL;
 
 void* malloc2(int tamanho){
     void *v = malloc(tamanho);
-    inserir_elemento(&lixo, v);
+    inserir_elemento(&heap, v);
     return v;
+}
+
+void dump(){
+    remover_lixo(&heap);
 }
 
 //Função que atribui o endereco2 no endereco1 end2 = end1;
@@ -21,22 +25,21 @@ void atrib2(void* *endereco1, void* endereco2){
     */
 
     if(endereco1 != NULL){
-        lista *endBusca1 = buscar_elemento(lixo, *endereco1);
+        lista *endBusca1 = buscar_elemento(heap, *endereco1);
         endBusca1->qtdPtr--;
+
+        if(endBusca1->qtdPtr == 0)
+            dump();
     }
     
     if(endereco2 != NULL){
-        lista *endBusca2 = buscar_elemento(lixo, endereco2);
+        lista *endBusca2 = buscar_elemento(heap, endereco2);
         endBusca2->qtdPtr++;
     }
     
     *endereco1 = endereco2;
 }
 
-void dump(){
-    remover_lixo(&lixo);
-}
-
-void print_lixo(){
-    print_lista(lixo);
+void heap_status(){
+    print_lista(heap);
 }

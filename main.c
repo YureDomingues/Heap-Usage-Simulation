@@ -6,13 +6,9 @@ int main(){
     int *v = (int*) malloc2(sizeof(int));
     *v = 10;
     int *w = (int*) malloc2(sizeof(int));
-    dump();
     *w = 20;
     atrib2(&v,w);
-    dump();
-    dump();
     atrib2(&w,NULL);
-    dump();
-    print_lixo();
+    heap_status();
     return 0;
 };
