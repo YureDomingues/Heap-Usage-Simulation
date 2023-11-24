@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "headers/contagem-referencia.h"
 #include "headers/front.h"
+#include <time.h>
 
 int main() {
     SDL_Window* window = NULL;
@@ -10,6 +11,9 @@ int main() {
     SDL_Texture* time_texture;
     SDL_Rect header_rect;
     TTF_Font *font = NULL;
+    int completed_bars = 0;
+    int number_bars = 120;
+    int time = 100;
 
     TTF_Init();
 
@@ -32,21 +36,25 @@ int main() {
         while( !SDL_QuitRequested() ) {
             SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, background.a); 
             SDL_RenderClear(renderer);
-
-            for(int i = 0; i<120; i++){
-                
-                
-                if(i <= 100){
-                    draw_bar_ref(renderer, i, 2*i);
-                }else{
-                    draw_bar_ref(renderer, i, 200);
-                }
-            }
-        
-            draw_lines(renderer);
             draw_headers("Contagem por referencia", "Mark-and-Sweep", renderer, font, &header_texture, &header_rect);
             
-            SDL_RenderPresent(renderer);
+            if (completed_bars != number_bars){
+                for(int i = 0; i<number_bars; i++){ 
+                    if(i <= 100){
+                        draw_bar_ref(renderer, i, i*0.01);
+                        draw_lines(renderer);
+                    }else{
+                        draw_bar_ref(renderer, i, 1);
+                        draw_lines(renderer);
+                    }
+
+                    completed_bars++;
+                    SDL_RenderPresent(renderer);
+                    SDL_Delay(time);
+                }
+            }
+            
+            
         }
     }
     else

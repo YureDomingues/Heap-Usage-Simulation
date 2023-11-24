@@ -32,19 +32,21 @@ void draw_headers(char* header1, char* header2, SDL_Renderer *renderer, TTF_Font
     SDL_DestroyTexture(*texture);
 }
 
-void draw_bar(SDL_Renderer* renderer, int x, int y, int h, int w){
+void draw_bar(SDL_Renderer* renderer, int x, int y, float percent, int w){
     SDL_SetRenderDrawColor(renderer, bar.r, bar.g, bar.b, bar.a); 
-    SDL_Rect rect = {.x = x, .y = y, .h = h, .w = w};
+    SDL_Rect rect = {.x = x, .y = y, .h = MAX_BAR_HIGH*percent, .w = w};
     SDL_RenderFillRect(renderer, &rect);
     SDL_SetRenderDrawColor(renderer, line.r, line.g, grid.b, line.a); 
     SDL_RenderDrawRect(renderer, &rect);
 }
 
-void draw_bar_ref(SDL_Renderer* renderer, int pos, int high){
-    draw_bar(renderer, 80+pos*BAR_WIDTH, WINDOWS_HIGH/2-high, high, BAR_WIDTH);
+void draw_bar_ref(SDL_Renderer* renderer, int pos, float percent){
+    int high = MAX_BAR_HIGH*percent;
+    draw_bar(renderer, 80+pos*BAR_WIDTH, WINDOWS_HIGH/2-(high), percent, BAR_WIDTH);
 }
 
-void draw_bar_mark(SDL_Renderer* renderer, int pos, int high){
+void draw_bar_mark(SDL_Renderer* renderer, int pos, int percent){
+    int high = MAX_BAR_HIGH*percent;
     draw_bar(renderer, 80+pos*BAR_WIDTH, WINDOWS_HIGH-high, high, BAR_WIDTH);
 }
 
@@ -55,10 +57,10 @@ void draw_lines(SDL_Renderer* renderer){
     int div_part = 4;
 
     SDL_SetRenderDrawColor(renderer, line.r, line.g, line.b, line.a);
-    for(int i=0; i<=4; i++){
+    for(int i=0; i<=div_part; i++){
         SDL_RenderDrawLine(renderer, xi, WINDOWS_HIGH/2 - (h/div_part)*i, xf, WINDOWS_HIGH/2 - (h/div_part)*i);
     }
-    for(int i=0; i<=4; i++){
+    for(int i=0; i<=div_part; i++){
         SDL_RenderDrawLine(renderer, xi, WINDOWS_HIGH - (h/div_part)*i, xf, WINDOWS_HIGH - (h/div_part)*i);
     }
     
