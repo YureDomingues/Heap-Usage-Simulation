@@ -3,7 +3,7 @@
 #include "headers/list.h"
 #include "headers/mark-and-sweep.h"
 
-#define USAGE_LIMIT_RATIO 0.5
+#define USAGE_LIMIT_RATIO 0.9
 
 lista *heap_mark = NULL;
 

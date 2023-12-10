@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "headers/reference_counting.h"
-#include "headers/mark-and-sweep.h"
+#include "headers/memory-manipulation.h"
 #include "headers/front.h"
 
 int main() {
@@ -19,13 +18,13 @@ int main() {
 
     TTF_Init();
 
-    font_header = TTF_OpenFont("fonts/Go-Bold.ttf", 24);
+    font_header = TTF_OpenFont("fonts/Comprehension-SemiBold.ttf", 24);
     if (font_header == NULL) {
         fprintf(stderr, "Erro: fonte não encontrada.\n");
         exit(EXIT_FAILURE);
     }
 
-    font_numbers = TTF_OpenFont("fonts/Go-Bold.ttf", 24);
+    font_numbers = TTF_OpenFont("fonts/Comprehension-SemiBold.ttf", 24);
     if (font_numbers == NULL) {
         fprintf(stderr, "Erro: fonte não encontrada.\n");
         exit(EXIT_FAILURE);
@@ -43,9 +42,8 @@ int main() {
         int i = 0;
         SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, background.a); 
         SDL_RenderClear(renderer);
-        
         while( !SDL_QuitRequested() ) {
-            draw_headers("Contagem por Referencia", "Mark-and-Sweep", renderer, font_header);
+            draw_headers("Reference Counting", "Mark-and-Sweep", renderer, font_header);
             
             if(i<=number_bars){
                 manipulation2(&q1,&q2);
