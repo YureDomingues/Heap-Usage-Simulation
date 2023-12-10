@@ -1,24 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "headers/contagem-referencia.h"
-#include "headers/front.h"
 #include <time.h>
+#include "headers/reference_counting.h"
+#include "headers/mark-and-sweep.h"
+#include "headers/front.h"
 
 int main() {
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
-    SDL_Texture* header_texture = NULL;
-    SDL_Texture* time_texture;
-    SDL_Rect header_rect;
-    TTF_Font *font = NULL;
+    TTF_Font *font_header = NULL;
+    TTF_Font *font_numbers = NULL;
     int completed_bars = 0;
     int number_bars = 120;
-    int time = 100;
+    int clock = 50;
+    float q1, q2;
+
+    srand(time(NULL));
 
     TTF_Init();
 
-    font = TTF_OpenFont("fonts/Go-Bold.ttf", 24);
-    if (font == NULL) {
+    font_header = TTF_OpenFont("fonts/Go-Bold.ttf", 24);
+    if (font_header == NULL) {
+        fprintf(stderr, "Erro: fonte não encontrada.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    font_numbers = TTF_OpenFont("fonts/Go-Bold.ttf", 24);
+    if (font_numbers == NULL) {
         fprintf(stderr, "Erro: fonte não encontrada.\n");
         exit(EXIT_FAILURE);
     }
@@ -32,38 +40,31 @@ int main() {
         SDL_Log("Erro na inicialização: %s", SDL_GetError());
 
     if ( window != NULL ){
+        int i = 0;
+        SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, background.a); 
+        SDL_RenderClear(renderer);
         
         while( !SDL_QuitRequested() ) {
-            SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, background.a); 
-            SDL_RenderClear(renderer);
-            draw_headers("Contagem por referencia", "Mark-and-Sweep", renderer, font, &header_texture, &header_rect);
+            draw_headers("Contagem por Referencia", "Mark-and-Sweep", renderer, font_header);
             
-            if (completed_bars != number_bars){
-                for(int i = 0; i<number_bars; i++){ 
-                    if(i <= 100){
-                        draw_bar_ref(renderer, i, i*0.01);
-                        draw_lines(renderer);
-                    }else{
-                        draw_bar_ref(renderer, i, 1);
-                        draw_lines(renderer);
-                    }
-
-                    completed_bars++;
-                    SDL_RenderPresent(renderer);
-                    SDL_Delay(time);
-                }
+            if(i<=number_bars){
+                manipulation2(&q1,&q2);
+                draw_lines(renderer);
+                draw_bar_ref(renderer, i, q1);
+                draw_bar_mark(renderer, i, q2);
+                completed_bars++;
+                SDL_RenderPresent(renderer);
+                i++;
+                SDL_Delay(clock);
             }
-            
-            
         }
     }
     else
         SDL_Log("Erro na criação da janela: %s", SDL_GetError());
 
-    TTF_CloseFont(font);
+    TTF_CloseFont(font_header);
     TTF_Quit();
 
-    SDL_DestroyTexture(header_texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

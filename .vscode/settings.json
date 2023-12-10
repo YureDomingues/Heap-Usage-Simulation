@@ -1,6 +1,12 @@
 {
     "files.associations": {
         "*.embeddedhtml": "html",
-        "iostream": "cpp"
+        "stdio.h": "c",
+        "contagem-referencia.h": "c",
+        "lista.h": "c",
+        "mark-and-sweep.h": "c",
+        "reference_counting.h": "c",
+        "stdlib.h": "c",
+        "list.h": "c"
     }
 }

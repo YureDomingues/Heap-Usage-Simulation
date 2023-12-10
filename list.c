@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "headers/lista.h"
+#include "headers/list.h"
 
 
 lista* buscar_elemento(lista *l, void* elemento){
@@ -25,9 +25,9 @@ void inserir_elemento(lista **l, void* elemento){
 }
 
 
-void remover_lixo(lista** l){
+void remover(lista** l){
 	if(*l != NULL){
-        remover_lixo((&(*l)->prox));
+        remover((&(*l)->prox));
         
 		if((*l)->qtdPtr == 0){
 
@@ -46,4 +46,14 @@ void print_lista(lista *l){
     }else{
         printf("\n");
     };
+}
+
+// Função para calcular o tamanho da lista
+int tamanho_lista(lista *l) {
+    int tamanho = 0;
+    while (l != NULL) {
+        tamanho++;
+        l = l->prox;
+    }
+    return tamanho;
 }
