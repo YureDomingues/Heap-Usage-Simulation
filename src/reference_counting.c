@@ -12,9 +12,8 @@ void* malloc_ref(int tamanho){
 
 //Função que atribui o endereco2 no endereco1 end2 = end1;
 void atrib_ref(void** endereco1, void* endereco2) {
-    if (*endereco1 != NULL) {void* malloc_ref(int tamanho);
-void atrib(void** endereco1, void* endereco2);
-        lista *endBusca1 = buscar_elemento(heap_ref, *endereco1);
+    if (*endereco1 != NULL) {
+        lista* endBusca1 = buscar_elemento(heap_ref, *endereco1);
         endBusca1->qtdPtr--;
 
         if (endBusca1->qtdPtr == 0)
@@ -22,13 +21,12 @@ void atrib(void** endereco1, void* endereco2);
     }
 
     if (endereco2 != NULL) {
-        lista *endBusca2 = buscar_elemento(heap_ref, endereco2);
+        lista* endBusca2 = buscar_elemento(heap_ref, endereco2);
         endBusca2->qtdPtr++;
     }
 
     *endereco1 = (endereco2 != NULL) ? endereco2 : NULL;
 }
-
 void dump_ref(lista **heap){
     remover(heap);
 }

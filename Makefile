@@ -13,7 +13,7 @@ CFLAGS = -Wall -Wextra -g
 LIBS = -lSDL2main -lSDL2 -lSDL2_ttf
 
 # Arquivos fonte
-SOURCES = main.c front.c list.c reference_counting.c mark-and-sweep.c memory_manipulation.c 
+SOURCES = src/main.c src/front.c src/list.c src/reference_counting.c src/mark-and-sweep.c src/memory_manipulation.c
 
 # Comando padrão para compilar o programa
 all: $(TARGET)

@@ -7,6 +7,7 @@
         "mark-and-sweep.h": "c",
         "reference_counting.h": "c",
         "stdlib.h": "c",
-        "list.h": "c"
+        "list.h": "c",
+        "memory-manipulation.h": "c"
     }
 }
